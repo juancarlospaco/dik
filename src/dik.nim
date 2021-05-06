@@ -1,4 +1,4 @@
-## * Table implemented as optimized sorted hashed dictionary of `{array[char]: Option[T]}`, same size as a Table, 0 dependencies, ~300 lines.
+## * Table implemented as optimized sorted hashed dictionary of `{array[char]: Option[T]}`, same size and API as a Table, 0 dependencies, ~300 lines.
 ## .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Madoqua_kirkii_-_female_%28Namutoni%29.jpg/1200px-Madoqua_kirkii_-_female_%28Namutoni%29.jpg
 runnableExamples("--gc:arc --import:std/tables"): doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())
 import hashes, options, bitops
