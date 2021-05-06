@@ -1,6 +1,6 @@
 # Dik
 
-- Table implemented as optimized sorted hashed dictionary, same size as a Table.
+- Table implemented as optimized sorted hashed dictionary, same size as a Table, 0 dependencies, ~300 lines.
 
 Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 
