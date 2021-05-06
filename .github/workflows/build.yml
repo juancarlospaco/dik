@@ -1,0 +1,29 @@
+name: Build
+on:
+  push:
+    paths:
+      - 'src/**.nim'
+      - '.github/workflows/*.yml'
+      - '.github/workflows/*.yaml'
+      - '.gitignore'
+
+jobs:
+  build:
+    if: |
+      !contains(github.event.head_commit.message, '[skip ci]')
+    strategy:
+      fail-fast: true
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+    name: ${{ matrix.platform }}
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: jiro4989/setup-nim-action@v1
+      with:
+        nim-version: '1.4.6'
+        no-color: true  # --noColor
+
+    - name: Tests
+      run: nim doc --project --experimental:strictFuncs --styleCheck:hint --outdir:docs src/dik.nim
