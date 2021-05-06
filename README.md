@@ -1,6 +1,6 @@
 # Dik
 
-Table implemented as optimized sorted hashed dictionary.
+Table implemented as optimized sorted hashed dictionary,
 same size and API as a Table, 0 dependencies, ~300 lines.
 
 Get items by index or `BackwardsIndex` or `Slice` or `string` key,
