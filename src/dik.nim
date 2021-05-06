@@ -1,6 +1,5 @@
 ## * Table implemented as optimized sorted hashed dictionary of `{array[char]: Option[T]}`, same size and API as a Table, 0 dependencies, ~300 lines.
 ## .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Madoqua_kirkii_-_female_%28Namutoni%29.jpg/1200px-Madoqua_kirkii_-_female_%28Namutoni%29.jpg
-runnableExamples("--gc:arc --experimental:strictFuncs --import:std/tables"): doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())
 import hashes, options, bitops
 
 type
@@ -264,6 +263,15 @@ template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T]
   assert index.int <= self.len.int, "index must not be greater than len, index out of range"
   self.items[when index is SomeInteger: index.int else: index].val
 
+proc `[]`*[T](self: Dik[T], slice: Slice[int]): seq[Option[T]] {.noinit.} =
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
+    let dict = {"a": 0, "b": 1, "c": 2, "d": 3}.toDik
+    doAssert dict[1..2] == @[some(1), some(2)]
+  assert slice.a >= 0, "Slice A must be a natural positive integer"
+  assert slice.b <= self.len.int, "Slice B must not be greater than len, index out of range"
+  result = newSeqOfCap[Option[T]](slice.b - slice.a)
+  for item in self.items[slice]: result.add item.val
+
 func get*[T](self: Dik[T], value: Option[T]): seq[string] =
   ## Get keys by value, like a backwards `get` without reversing the dictionary.
   runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"): doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
@@ -273,7 +281,6 @@ func get*[T](self: Dik[T], value: Option[T]): seq[string] =
 template len*(self: Dik): int = self.len.int
 
 template cap*(self: Dik): int = self.cap.int
-  ## Capacity currently allocated in memory (may or may not be the same as `len`).
 
 template `[]`*(s: Indices, i: int): int =
   ## .. warning:: **DO NOT USE.**
@@ -290,3 +297,6 @@ template `[]=`*(s: Indices, i: int, val: int) =
   elif self.allocated.int64 <= 0xffff:     cast[ptr UncheckedArray[int16]](s)[i] = int16(val)
   elif self.allocated.int64 <= 0xffffffff: cast[ptr UncheckedArray[int32]](s)[i] = int32(val)
   else: doAssert false, "ERROR: Allocated size error"
+
+runnableExamples("--gc:arc --experimental:strictFuncs --import:std/tables"):
+  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())

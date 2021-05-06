@@ -184,6 +184,11 @@ window.addEventListener('DOMContentLoaded', main);
     title="`==`[T](lhs, rhs: Dik[T]): bool">`==`[T](lhs, rhs: Dik[T]): bool</a></li>
 
   </ul>
+  <ul class="simple nested-toc-section">[]
+      <li><a class="reference" href="#%5B%5D%2CDik%5BT%5D%2CSlice%5Bint%5D"
+    title="`[]`[T](self: Dik[T]; slice: Slice[int]): seq[Option[T]]">`[]`[T](self: Dik[T]; slice: Slice[int]): seq[Option[T]]</a></li>
+
+  </ul>
 
   </ul>
 </li>
@@ -422,6 +427,16 @@ window.addEventListener('DOMContentLoaded', main);
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;b&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">toSeq</span><span class="Whitespace"> </span><span class="Keyword">is</span><span class="Whitespace"> </span><span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">Option</span><span class="Punctuation">[</span><span class="Identifier">int</span><span class="Punctuation">]</span><span class="Punctuation">]</span></pre>
 
 </dd>
+<a id="[],Dik[T],Slice[int]"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#%5B%5D%2CDik%5BT%5D%2CSlice%5Bint%5D"><span class="Identifier">`[]`</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">slice</span><span class="Other">:</span> <span class="Identifier">Slice</span><span class="Other">[</span><span class="Identifier">int</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">]</span> {.<span class="Identifier">noinit</span>.}</pre></dt>
+<dd>
+
+
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
+<pre class="listing"><span class="Keyword">let</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;b&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;d&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">3</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
+</span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">[</span><span class="FloatNumber">1.</span><span class="Operator">.</span><span class="DecNumber">2</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="Operator">@</span><span class="Punctuation">[</span><span class="Identifier">some</span><span class="Punctuation">(</span><span class="DecNumber">1</span><span class="Punctuation">)</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="Identifier">some</span><span class="Punctuation">(</span><span class="DecNumber">2</span><span class="Punctuation">)</span><span class="Punctuation">]</span></pre>
+
+</dd>
 <a id="get,Dik[T],Option[T]"></a>
 <dt><pre><span class="Keyword">func</span> <a href="#get%2CDik%5BT%5D%2COption%5BT%5D"><span class="Identifier">get</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">value</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">seq</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span></pre></dt>
 <dd>
@@ -505,7 +520,7 @@ Get items by index or backwards index, <strong>you can use the dictionary as if 
 <dt><pre><span class="Keyword">template</span> <a href="#cap.t%2CDik"><span class="Identifier">cap</span></a><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span></pre></dt>
 <dd>
 
-Capacity currently allocated in memory (may or may not be the same as <tt class="docutils literal"><span class="pre"><span class="Identifier">len</span></span></tt>).
+
 
 </dd>
 <a id="[].t,Indices,int"></a>
@@ -536,7 +551,7 @@ Capacity currently allocated in memory (may or may not be the same as <tt class=
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 21:20:55 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 21:51:11 UTC</small>
       </div>
     </div>
   </div>
