@@ -1,8 +1,8 @@
 # Dik
 
-- Table implemented as optimized sorted hashed dictionary.
+- Table implemented as optimized sorted hashed dictionary, same size as a Table.
 
-Documentation: https://juancarlospaco.github.io/dik
+Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 
 
 # FAQ
