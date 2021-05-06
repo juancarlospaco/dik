@@ -251,7 +251,7 @@ window.addEventListener('DOMContentLoaded', main);
   <p class="module-desc"><ul class="simple"><li>Table implemented as optimized sorted hashed dictionary of <tt class="docutils literal"><span class="pre"><span class="Punctuation">{</span><span class="Identifier">array</span><span class="Punctuation">[</span><span class="Identifier">char</span><span class="Punctuation">]</span><span class="Punctuation">:</span> <span class="Identifier">Option</span><span class="Punctuation">[</span><span class="Identifier">T</span><span class="Punctuation">]</span><span class="Punctuation">}</span></span></tt>, same size and API as a Table, 0 dependencies, ~300 lines.</li>
 </ul>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Madoqua_kirkii_-_female_%28Namutoni%29.jpg/1200px-Madoqua_kirkii_-_female_%28Namutoni%29.jpg"/>
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/tables</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/tables</strong></p>
 <pre class="listing"><span class="Keyword">import</span><span class="Whitespace"> </span><span class="Identifier">src</span><span class="Operator">/</span><span class="Identifier">dik</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">newDik</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Punctuation">)</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="Identifier">sizeof</span><span class="Punctuation">(</span><span class="Identifier">initOrderedTable</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Punctuation">)</span></pre></p>
   <div class="section" id="7">
@@ -391,7 +391,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">add</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Whitespace"> </span><span class="Keyword">in</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Whitespace">
@@ -408,7 +408,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;X&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="RawData">get&quot;key&quot;</span><span class="Whitespace"> </span><span class="Keyword">is</span><span class="Whitespace"> </span><span class="Identifier">Option</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Keyword">and</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="RawData">get&quot;key&quot;</span><span class="Operator">.</span><span class="Identifier">isSome</span><span class="Whitespace"> </span><span class="Keyword">and</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="RawData">get&quot;key&quot;</span><span class="Operator">.</span><span class="Identifier">get</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;X&quot;</span></pre>
 
@@ -418,7 +418,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;b&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">toSeq</span><span class="Whitespace"> </span><span class="Keyword">is</span><span class="Whitespace"> </span><span class="Identifier">seq</span><span class="Punctuation">[</span><span class="Identifier">Option</span><span class="Punctuation">[</span><span class="Identifier">int</span><span class="Punctuation">]</span><span class="Punctuation">]</span></pre>
 
 </dd>
@@ -427,7 +427,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 Get keys by value, like a backwards <tt class="docutils literal"><span class="pre"><span class="Identifier">get</span></span></tt> without reversing the dictionary.
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;b&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">get</span><span class="Punctuation">(</span><span class="Identifier">some</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">)</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="Operator">@</span><span class="Punctuation">[</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">]</span></pre>
 
 </dd>
@@ -441,7 +441,7 @@ Get keys by value, like a backwards <tt class="docutils literal"><span class="pr
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Keyword">for</span><span class="Whitespace"> </span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="Identifier">value</span><span class="Punctuation">)</span><span class="Whitespace"> </span><span class="Keyword">in</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">pairs</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">key</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;key&quot;</span><span class="Whitespace"> </span><span class="Keyword">and</span><span class="Whitespace"> </span><span class="Identifier">value</span><span class="Operator">.</span><span class="Identifier">get</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span></pre>
 
 </dd>
@@ -459,7 +459,7 @@ Get keys by value, like a backwards <tt class="docutils literal"><span class="pr
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Keyword">for</span><span class="Whitespace"> </span><span class="Identifier">value</span><span class="Whitespace"> </span><span class="Keyword">in</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">values</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">value</span><span class="Operator">.</span><span class="Identifier">get</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span></pre>
 
 </dd>
@@ -487,7 +487,7 @@ Alias for <tt class="docutils literal"><span class="pre"><span class="Identifier
 <dd>
 
 Get items by index or backwards index, <strong>you can use the dictionary as if it was an array</strong>.
-<p><strong class="examples_text">Example: cmd: --gc:arc --import:std/options</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --import:std/options</strong></p>
 <pre class="listing"><span class="Keyword">let</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;a&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">0</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;b&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;c&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">[</span><span class="DecNumber">1</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="Identifier">some</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">[</span><span class="Operator">^</span><span class="DecNumber">1</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="Identifier">some</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Whitespace">
@@ -536,7 +536,7 @@ Capacity currently allocated in memory (may or may not be the same as <tt class=
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 16:22:54 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 21:13:13 UTC</small>
       </div>
     </div>
   </div>

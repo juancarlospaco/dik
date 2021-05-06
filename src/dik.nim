@@ -1,6 +1,6 @@
 ## * Table implemented as optimized sorted hashed dictionary of `{array[char]: Option[T]}`, same size and API as a Table, 0 dependencies, ~300 lines.
 ## .. image:: https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Madoqua_kirkii_-_female_%28Namutoni%29.jpg/1200px-Madoqua_kirkii_-_female_%28Namutoni%29.jpg
-runnableExamples("--gc:arc --import:std/tables"): doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())
+runnableExamples("--gc:arc --experimental:strictFuncs --import:std/tables"): doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())
 import hashes, options, bitops
 
 type
@@ -25,7 +25,7 @@ func str(arrai: array[32, char]): string {.inline, noinit.} =
     if c != '\x00': result.add c
 
 iterator pairs*[T](self: Dik[T]): (string, Option[T]) =
-  runnableExamples("--gc:arc --import:std/options"):
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key" and value.get == "value"
   for it in self.items:
     if it != nil: yield (it.key.str, it.val)
@@ -37,7 +37,7 @@ iterator keys*[T](self: Dik[T]): string =
     if it != nil: yield it.key.str
 
 iterator values*[T](self: Dik[T]): Option[T] =
-  runnableExamples("--gc:arc --import:std/options"):
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     for value in {"key": "value"}.toDik.values: doAssert value.get == "value"
   for it in self.items:
     if it != nil: yield it.val
@@ -207,7 +207,7 @@ func del*[T](self: var Dik[T], key: string) =
   self.len.dec
 
 proc add*[T](self: var Dik[T], key: string, val: T or Option[T]) =
-  runnableExamples("--gc:arc --import:std/options"):
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     var dict: Dik[string] = {"key": "value"}.toDik
     dict.add "other", "value"
     doAssert "other" in dict
@@ -233,7 +233,7 @@ proc add*[T](self: var Dik[T], key: string, val: T or Option[T]) =
   else: self.items[i2].val = value
 
 func get*[T](self: Dik[T], key: string): Option[T] =
-  runnableExamples("--gc:arc --import:std/options"):
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     var dict: Dik[string] = {"key": "X"}.toDik
     doAssert dict.get"key" is Option[string] and dict.get"key".isSome and dict.get"key".get == "X"
   assert key.len > 0, "key must not be empty"
@@ -243,7 +243,7 @@ func get*[T](self: Dik[T], key: string): Option[T] =
   result = self.items[i].val
 
 func toSeq*[T](self: Dik[T]): seq[Option[T]] =
-  runnableExamples("--gc:arc --import:std/options"): doAssert {"a": 0, "b": 1, "c": 2}.toDik.toSeq is seq[Option[int]]
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"): doAssert {"a": 0, "b": 1, "c": 2}.toDik.toSeq is seq[Option[int]]
   result = newSeqOfCap[Option[T]](self.items.len)
   for item in self.items: result.add item.val
 
@@ -255,7 +255,7 @@ template `[]`*[T](self: Dik[T], key: string): Option[T] = self.get(key)
 
 template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T] =
   ## Get items by index or backwards index, **you can use the dictionary as if it was an array**.
-  runnableExamples("--gc:arc --import:std/options"):
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     let dict = {"a": 0, "b": 1, "c": 2}.toDik
     doAssert dict[1] == some 1
     doAssert dict[^1] == some 2
@@ -266,7 +266,7 @@ template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T]
 
 func get*[T](self: Dik[T], value: Option[T]): seq[string] =
   ## Get keys by value, like a backwards `get` without reversing the dictionary.
-  runnableExamples("--gc:arc --import:std/options"): doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
+  runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"): doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
   for item in self.items:
     if item.val == value: result.add item.key.str
 
