@@ -11,7 +11,6 @@ Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 ![](https://img.shields.io/github/languages/code-size/juancarlospaco/dik?style=for-the-badge)
 ![](https://img.shields.io/github/issues-raw/juancarlospaco/dik?style=for-the-badge "Bugs")
 ![](https://img.shields.io/github/issues-pr-raw/juancarlospaco/dik?style=for-the-badge "PRs")
-![](https://img.shields.io/github/commit-activity/y/juancarlospaco/dik?style=for-the-badge)
 ![](https://img.shields.io/github/last-commit/juancarlospaco/dik?style=for-the-badge "Commits")
 
 
