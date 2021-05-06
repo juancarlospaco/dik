@@ -278,7 +278,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Operator">$</span><span class="Identifier">toDik</span><span class="Punctuation">(</span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Punctuation">)</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="LongStringLit">&quot;&quot;&quot;{&quot;key&quot;:666,&quot;other&quot;:42}&quot;&quot;&quot;</span></pre>
 
 </dd>
@@ -294,7 +294,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">toCsv</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;</span><span class="EscapeSequence">\&quot;</span><span class="EscapeSequence">key\&quot;</span><span class="EscapeSequence">,\&quot;</span><span class="EscapeSequence">other\&quot;</span><span class="EscapeSequence">\n</span><span class="EscapeSequence">\&quot;</span><span class="EscapeSequence">666\&quot;</span><span class="EscapeSequence">,\&quot;</span><span class="EscapeSequence">42\&quot;</span><span class="EscapeSequence">\n</span><span class="StringLit">&quot;</span></pre>
 
 </dd>
@@ -303,7 +303,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">int</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">clear</span><span class="Punctuation">(</span><span class="Punctuation">)</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Operator">$</span><span class="Identifier">dict</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;{:}&quot;</span><span class="Whitespace"> </span><span class="Keyword">and</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="DecNumber">0</span></pre>
@@ -321,7 +321,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Keyword">let</span><span class="Whitespace"> </span><span class="Identifier">a</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;foo&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;bar&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Keyword">let</span><span class="Whitespace"> </span><span class="Identifier">b</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;foo&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;bar&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">c</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;foo&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">1</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;OwO&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;bar&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
@@ -336,7 +336,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">int</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">cap</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="DecNumber">2</span><span class="Whitespace">   </span><span class="Comment">## Capacity is &quot;Read-Only&quot;.</span><span class="Whitespace">
 </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">resized</span><span class="Punctuation">(</span><span class="DecNumber">8</span><span class="Punctuation">)</span><span class="Whitespace">
@@ -362,7 +362,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">666</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace"> </span><span class="Keyword">is</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">int</span><span class="Punctuation">]</span></pre>
 
 </dd>
@@ -371,7 +371,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">contains</span><span class="Whitespace"> </span><span class="StringLit">&quot;key&quot;</span></pre>
 
 </dd>
@@ -380,7 +380,7 @@ window.addEventListener('DOMContentLoaded', main);
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs</strong></p>
 <pre class="listing"><span class="Keyword">var</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">Dik</span><span class="Punctuation">[</span><span class="Identifier">string</span><span class="Punctuation">]</span><span class="Whitespace"> </span><span class="Operator">=</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Whitespace">
 </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">del</span><span class="Whitespace"> </span><span class="StringLit">&quot;key&quot;</span><span class="Whitespace">
 </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">dict</span><span class="Operator">.</span><span class="Identifier">len</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="DecNumber">0</span></pre>
@@ -450,7 +450,7 @@ Get keys by value, like a backwards <tt class="docutils literal"><span class="pr
 <dd>
 
 
-<p><strong class="examples_text">Example: cmd: --gc:arc</strong></p>
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs </strong></p>
 <pre class="listing"><span class="Keyword">for</span><span class="Whitespace"> </span><span class="Punctuation">(</span><span class="Identifier">key</span><span class="Punctuation">,</span><span class="Whitespace"> </span><span class="Identifier">value</span><span class="Punctuation">)</span><span class="Whitespace"> </span><span class="Keyword">in</span><span class="Whitespace"> </span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">pairs</span><span class="Punctuation">:</span><span class="Whitespace"> </span><span class="Identifier">doAssert</span><span class="Whitespace"> </span><span class="Identifier">key</span><span class="Whitespace"> </span><span class="Operator">==</span><span class="Whitespace"> </span><span class="StringLit">&quot;key&quot;</span></pre>
 
 </dd>
@@ -536,7 +536,7 @@ Capacity currently allocated in memory (may or may not be the same as <tt class=
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 21:13:13 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-05-06 21:20:55 UTC</small>
       </div>
     </div>
   </div>

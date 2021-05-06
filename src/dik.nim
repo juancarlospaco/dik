@@ -31,7 +31,7 @@ iterator pairs*[T](self: Dik[T]): (string, Option[T]) =
     if it != nil: yield (it.key.str, it.val)
 
 iterator keys*[T](self: Dik[T]): string =
-  runnableExamples("--gc:arc"):
+  runnableExamples("--gc:arc --experimental:strictFuncs "):
     for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key"
   for it in self.items:
     if it != nil: yield it.key.str
@@ -43,7 +43,7 @@ iterator values*[T](self: Dik[T]): Option[T] =
     if it != nil: yield it.val
 
 func `$`*[T](self: Dik[T]): string {.noinit.} =
-  runnableExamples("--gc:arc"): doAssert $toDik({"key": 666, "other": 42}) == """{"key":666,"other":42}"""
+  runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert $toDik({"key": 666, "other": 42}) == """{"key":666,"other":42}"""
   result = "{"
   if unlikely(self.len == 0): result.add ':'
   else:
@@ -75,7 +75,7 @@ func pretty*[T](self: Dik[T]): string =
   result.add '}'
 
 func toCsv*[T](self: Dik[T]): string =
-  runnableExamples("--gc:arc"): doAssert {"key": 666, "other": 42}.toDik.toCsv == "\"key\",\"other\"\n\"666\",\"42\"\n"
+  runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert {"key": 666, "other": 42}.toDik.toCsv == "\"key\",\"other\"\n\"666\",\"42\"\n"
   if unlikely(self.len == 0): return
   else:
     var i = 1
@@ -96,7 +96,7 @@ template clearDikImpl(self) =
   self.items.setLen 0
 
 proc clear*[T](self: var Dik[T]) {.inline.} =
-  runnableExamples("--gc:arc"):
+  runnableExamples("--gc:arc --experimental:strictFuncs"):
     var dict: Dik[int] = {"key": 666, "other": 42}.toDik
     dict.clear()
     doAssert $dict == "{:}" and dict.len == 0
@@ -109,7 +109,7 @@ proc `=destroy`*[T](self: var Dik[T]) =
   self.indices = Indices(nil)
 
 func `==`*[T](lhs, rhs: Dik[T]): bool =
-  runnableExamples("--gc:arc"):
+  runnableExamples("--gc:arc --experimental:strictFuncs"):
     let a = {"foo": 1, "bar": 2}.toDik
     let b = {"foo": 1, "bar": 2}.toDik
     var c = {"foo": 1, "OwO": 666, "bar": 2}.toDik
@@ -137,7 +137,7 @@ func findEmptySlot[T](self: Dik[T], hashish: uint32): int =
   doAssert false, "ERROR: Slot not found"
 
 proc resized*[T](self: var Dik[T], newSize: Positive) =
-  runnableExamples("--gc:arc"):
+  runnableExamples("--gc:arc --experimental:strictFuncs"):
     var dict: Dik[int] = {"key": 666, "other": 42}.toDik
     doAssert dict.cap == 2   ## Capacity is "Read-Only".
     dict.resized(8)
@@ -168,7 +168,7 @@ proc newDik*[T](): Dik[T] {.inline.} = result.resized(32)
 proc newDikOfCap*[T](capacity: Positive): Dik[T] {.inline.} = result.resized(capacity)
 
 proc toDik*[T](items: openArray[(string, T)]): Dik[T] =
-  runnableExamples("--gc:arc"): doAssert {"key": 666, "other": 42}.toDik is Dik[int]
+  runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert {"key": 666, "other": 42}.toDik is Dik[int]
   assert items.len > 0, "items must not be empty openArray"
   result = newDikOfCap[T](items.len)
   for x in items: result[x[0]] = x[1]
@@ -188,13 +188,13 @@ func lookup[T](self: Dik[T], key: string, h: int): (int, int) =
   doAssert false, "ERROR: Dik item not found"
 
 func contains*[T](self: Dik[T], key: string): bool =
-  runnableExamples("--gc:arc"): doAssert {"key": "value"}.toDik.contains "key"
+  runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert {"key": "value"}.toDik.contains "key"
   assert key.len > 0, "key must not be empty string"
   if self.allocated < 1: return false
   result = self.lookup(key, hash(key))[1] >= 0
 
 func del*[T](self: var Dik[T], key: string) =
-  runnableExamples("--gc:arc"):
+  runnableExamples("--gc:arc --experimental:strictFuncs"):
     var dict: Dik[string] = {"key": "value"}.toDik
     dict.del "key"
     doAssert dict.len == 0
