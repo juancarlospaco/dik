@@ -28,6 +28,8 @@ Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 | `add()`   | 418 microseconds | 250 microseconds    |
 | `get()`   | 242 microseconds | 220 microseconds    |
 
+[source](benchmark.nim)
+
 
 # FAQ
 
