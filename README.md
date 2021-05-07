@@ -28,6 +28,8 @@ Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 | `add()`   | 418 microseconds | 250 microseconds    |
 | `get()`   | 242 microseconds | 220 microseconds    |
 
+`Table` is not ordered and does not return `Option[T]`, so it is just an approximation for development.
+
 [source](https://github.com/juancarlospaco/dik/blob/nim/benchmark.nim)
 
 
