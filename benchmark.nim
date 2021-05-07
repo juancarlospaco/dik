@@ -1,7 +1,7 @@
 import std/[tables, times]
 import dik
 
-const sizeForBench = 999
+const sizeForBench = 999  # Tested values `999` and `999_999`.
 
 template tableBench(name: string; code) =
   block:
