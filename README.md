@@ -19,6 +19,16 @@ Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
 ![](https://github.com/juancarlospaco/dik/actions/workflows/build.yml/badge.svg?branch=nim)
 
 
+# Benchmark
+
+| Operation | `Table`          | `Dik`               |
+|-----------|------------------|---------------------|
+| `del()`   | 974 microseconds | 301 microseconds    |
+| `clear()` | 5 milliseconds   | 150 microseconds    |
+| `add()`   | 418 microseconds | 250 microseconds    |
+| `get()`   | 242 microseconds | 220 microseconds    |
+
+
 # FAQ
 
 - Whats the name ?.
