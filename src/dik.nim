@@ -27,32 +27,31 @@ iterator pairs*[T](self: Dik[T]): (string, Option[T]) =
   runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key" and value.get == "value"
   for it in self.items:
-    if it != nil: yield (it.key.str, it.val)
+    if likely(it != nil): yield (it.key.str, it.val)
 
 iterator keys*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs "):
     for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key"
   for it in self.items:
-    if it != nil: yield it.key.str
+    if likely(it != nil): yield it.key.str
 
 iterator values*[T](self: Dik[T]): Option[T] =
   runnableExamples("--gc:arc --experimental:strictFuncs --import:std/options"):
     for value in {"key": "value"}.toDik.values: doAssert value.get == "value"
   for it in self.items:
-    if it != nil: yield it.val
+    if likely(it != nil): yield it.val
 
-func `$`*[T](self: Dik[T]): string {.noinit.} =
+func `$`*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert $toDik({"key": 666, "other": 42}) == """{"key":666,"other":42}"""
+  if unlikely(self.len == 0): return "{:}"
   result = "{"
-  if unlikely(self.len == 0): result.add ':'
-  else:
-    for key, val in self.pairs:
-      if result.len > 1: result.add ','
-      result.add '"'
-      result.add key
-      result.add '"'
-      result.add ':'
-      result.add $(val.get)
+  for key, val in self.pairs:
+    if result.len > 1: result.add ','
+    result.add '"'
+    result.add key
+    result.add '"'
+    result.add ':'
+    result.add $(val.get)
   result.add '}'
 
 func pretty*[T](self: Dik[T]): string =
