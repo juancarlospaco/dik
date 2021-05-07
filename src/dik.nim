@@ -55,21 +55,19 @@ func `$`*[T](self: Dik[T]): string =
   result.add '}'
 
 func pretty*[T](self: Dik[T]): string =
-  result = "{"
-  if unlikely(self.len == 0): result.add ':'
-  else:
+  if unlikely(self.len == 0): return "{:}"
+  result = "{\n"
+  for key, val in self.pairs:
+    result.add ' '
+    result.add ' '
+    result.add '"'
+    result.add key
+    result.add '"'
+    result.add ':'
+    result.add '\t'
+    result.add $(val.get)
+    result.add ','
     result.add '\n'
-    for key, val in self.pairs:
-      result.add ' '
-      result.add ' '
-      result.add '"'
-      result.add key
-      result.add '"'
-      result.add ':'
-      result.add '\t'
-      result.add $(val.get)
-      result.add ','
-      result.add '\n'
   result.add '}'
 
 func toCsv*[T](self: Dik[T]): string =
