@@ -58,8 +58,7 @@ func pretty*[T](self: Dik[T]): string =
   if unlikely(self.len == 0): return "{:}"
   result = "{\n"
   for key, val in self.pairs:
-    result.add ' '
-    result.add ' '
+    result.add '\t'
     result.add '"'
     result.add key
     result.add '"'
@@ -73,17 +72,16 @@ func pretty*[T](self: Dik[T]): string =
 func toCsv*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs"): doAssert {"key": 666, "other": 42}.toDik.toCsv == "\"key\",\"other\"\n\"666\",\"42\"\n"
   if unlikely(self.len == 0): return
-  else:
-    var i = 1
-    for key in self.keys:
-      result.addQuoted key
-      result.add(if i == self.items.len: '\n' else: ',')
-      inc i
-    i = 1
-    for val in self.values:
-      result.addQuoted $(val.get)
-      result.add(if i == self.items.len: '\n' else: ',')
-      inc i
+  var i = 1
+  for key in self.keys:
+    result.addQuoted key
+    result.add(if i == self.items.len: '\n' else: ',')
+    inc i
+  i = 1
+  for val in self.values:
+    result.addQuoted $(val.get)
+    result.add(if i == self.items.len: '\n' else: ',')
+    inc i
 
 template clearDikImpl(self) =
   self.allocated = 0.uint32
