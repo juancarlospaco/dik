@@ -48,28 +48,29 @@ iterator values*[T](self: Dik[T]): Option[T] =
   for it in self.items:
     if likely(it != nil): yield it.val
 
-func `$`*[T](self: Dik[T]): string =
+func `$`*[T](self: Dik[T]; raw: static[bool] = false): string =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     doAssert $toDik({"key": 666, "other": 42}) == """{"key":666,"other":42}"""
+    discard `$`(toDik({"key": 666, "other": 42}), raw = true)
 
   if unlikely(self.len == 0): return "{:}"
   result = "{"
-  for key, val in self.pairs:
+  for key, val in pairs(self, raw = raw):
     if result.len > 1: result.add ','
     result.add '"'
-    result.add key
+    result.add $key
     result.add '"'
     result.add ':'
     result.add $(val.get)
   result.add '}'
 
-func pretty*[T](self: Dik[T]): string =
+func pretty*[T](self: Dik[T]; raw: static[bool] = false): string =
   if unlikely(self.len == 0): return "{:}"
   result = "{\n"
-  for key, val in self.pairs:
+  for key, val in pairs(self, raw = raw):
     result.add '\t'
     result.add '"'
-    result.add key
+    result.add $key
     result.add '"'
     result.add ':'
     result.add '\t'
@@ -78,14 +79,14 @@ func pretty*[T](self: Dik[T]): string =
     result.add '\n'
   result.add '}'
 
-func toCsv*[T](self: Dik[T]): string =
+func toCsv*[T](self: Dik[T]; raw: static[bool] = false): string =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     doAssert {"key": 666, "other": 42}.toDik.toCsv == "\"key\",\"other\"\n\"666\",\"42\"\n"
 
   if unlikely(self.len == 0): return
   var i = 1
-  for key in self.keys:
-    result.addQuoted key
+  for key in keys(self, raw = raw):
+    result.addQuoted $key
     result.add(if i == self.items.len: '\n' else: ',')
     inc i
   i = 1
