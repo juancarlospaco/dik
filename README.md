@@ -3,10 +3,12 @@
 Table implemented as optimized sorted hashed dictionary,
 same size and API as a Table, 0 dependencies, ~300 lines.
 
-Get items by index or `BackwardsIndex` or `Slice` or `string` key,
+Get items by index or `BackwardsIndex` or `Slice` or `string`,
 destructor, resize in-place, `toSeq`, `pretty`, tests for everything.
 
 Documentation, Tests, Examples: https://juancarlospaco.github.io/dik
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Madoqua_kirkii_-_female_%28Namutoni%29.jpg/1200px-Madoqua_kirkii_-_female_%28Namutoni%29.jpg)
 
 ![](https://img.shields.io/github/languages/top/juancarlospaco/dik?style=for-the-badge)
 ![](https://img.shields.io/github/languages/count/juancarlospaco/dik?logoColor=green&style=for-the-badge)
