@@ -25,25 +25,32 @@ func str(arrai: array[32, char]): string {.inline, noinit.} =
 
 iterator pairs*[T](self: Dik[T]): (string, Option[T]) =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
-    for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key" and value.get == "value"
+    for (key, value) in {"key": "value"}.toDik.pairs:
+      doAssert key == "key" and value.get == "value"
+
   for it in self.items:
     if likely(it != nil): yield (it.key.str, it.val)
 
 iterator keys*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
-    for (key, value) in {"key": "value"}.toDik.pairs: doAssert key == "key"
+    for (key, value) in {"key": "value"}.toDik.pairs:
+      doAssert key == "key"
+
   for it in self.items:
     if likely(it != nil): yield it.key.str
 
 iterator values*[T](self: Dik[T]): Option[T] =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
-    for value in {"key": "value"}.toDik.values: doAssert value.get == "value"
+    for value in {"key": "value"}.toDik.values:
+      doAssert value.get == "value"
+
   for it in self.items:
     if likely(it != nil): yield it.val
 
 func `$`*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     doAssert $toDik({"key": 666, "other": 42}) == """{"key":666,"other":42}"""
+
   if unlikely(self.len == 0): return "{:}"
   result = "{"
   for key, val in self.pairs:
@@ -73,6 +80,7 @@ func pretty*[T](self: Dik[T]): string =
 func toCsv*[T](self: Dik[T]): string =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     doAssert {"key": 666, "other": 42}.toDik.toCsv == "\"key\",\"other\"\n\"666\",\"42\"\n"
+
   if unlikely(self.len == 0): return
   var i = 1
   for key in self.keys:
@@ -96,6 +104,7 @@ proc clear*[T](self: var Dik[T]) {.inline.} =
     var dict: Dik[int] = {"key": 666, "other": 42}.toDik
     dict.clear()
     doAssert $dict == "{:}" and dict.len == 0
+
   clearDikImpl(self)
   self.resized(32)
 
@@ -130,7 +139,7 @@ func findEmptySlot[T](self: Dik[T], hashish: uint32): int =
   while on:
     if self.indices[i] == -1: return i
     i = (((i * 5) + 1) and int(self.allocated - 1))
-  doAssert false, "ERROR: Slot not found"
+  doAssert false, "ERROR: Slot not found, internal error"
 
 proc resized*[T](self: var Dik[T], newSize: Positive) =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
@@ -138,6 +147,7 @@ proc resized*[T](self: var Dik[T], newSize: Positive) =
     doAssert dict.cap == 2   ## Capacity is "Read-Only".
     dict.resized(8)
     doAssert dict.cap == 10  ## (2 + 8)  ==  10
+
   assert newSize >= 0, "newSize must be a non-negative integer"
   let newCap = 1 shl (1 + fastLog2(((newSize * 3) + 1) shr 1))
   let itemSize: 1..8 =
@@ -164,7 +174,9 @@ proc newDik*[T](): Dik[T] {.inline.} = result.resized(32)
 proc newDikOfCap*[T](capacity: Positive): Dik[T] {.inline.} = result.resized(capacity)
 
 proc toDik*[T](items: openArray[(string, T)]): Dik[T] =
-  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"): doAssert {"key": 666, "other": 42}.toDik is Dik[int]
+  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
+    doAssert {"key": 666, "other": 42}.toDik is Dik[int]
+
   assert items.len > 0, "items must not be empty openArray"
   result = newDikOfCap[T](items.len)
   for x in items: result[x[0]] = x[1]
@@ -184,7 +196,9 @@ func lookup[T](self: Dik[T], key: string, h: int): (int, int) =
   doAssert false, "ERROR: Dik item not found"
 
 func contains*[T](self: Dik[T], key: string): bool =
-  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"): doAssert {"key": "value"}.toDik.contains "key"
+  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
+    doAssert {"key": "value"}.toDik.contains "key"
+
   assert key.len > 0, "key must not be empty string"
   if self.allocated < 1: return false
   result = self.lookup(key, hash(key))[1] >= 0
@@ -194,6 +208,7 @@ func del*[T](self: var Dik[T], key: string) =
     var dict: Dik[string] = {"key": "value"}.toDik
     dict.del "key"
     doAssert dict.len == 0
+
   assert key.len > 0, "key must not be empty string"
   if self.allocated < 1: return
   let (i1, i2) = self.lookup(key, hash(key))
@@ -213,6 +228,7 @@ proc add*[T](self: var Dik[T], key: string, val: T or Option[T]) =
     dict.add "duplicated", "1"
     dict.add "duplicated", "2"
     doAssert $dict == """{"key":value,"other":value,"another":value,"duplicated":2}"""
+
   assert key.len > 0, "key must not be empty string"
   assert key.len <= 32, "key must not be longer than 32 char"
   if self.items.len == self.cap.int:
@@ -232,6 +248,7 @@ func get*[T](self: Dik[T], key: string): Option[T] =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     var dict: Dik[string] = {"key": "X"}.toDik
     doAssert dict.get"key" is Option[string] and dict.get"key".isSome and dict.get"key".get == "X"
+
   assert key.len > 0, "key must not be empty"
   if self.allocated < 1: raise newException(KeyError, "ERROR: Key not found or dictionary is empty")
   let (_, i) = self.lookup(key, hash(key))
@@ -239,7 +256,9 @@ func get*[T](self: Dik[T], key: string): Option[T] =
   result = self.items[i].val
 
 func toSeq*[T](self: Dik[T]): seq[Option[T]] =
-  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"): doAssert {"a": 0, "b": 1, "c": 2}.toDik.toSeq is seq[Option[int]]
+  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
+    doAssert {"a": 0, "b": 1, "c": 2}.toDik.toSeq is seq[Option[int]]
+
   result = newSeqOfCap[Option[T]](self.items.len)
   for item in self.items: result.add item.val
 
@@ -256,6 +275,7 @@ template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T]
     doAssert dict[1] == some 1
     doAssert dict[^1] == some 2
     doAssert dict[uint8(2.0)] == some 2
+
   assert index.int >= 0, "index must be a natural positive integer"
   assert index.int <= self.len.int, "index must not be greater than len, index out of range"
   self.items[when index is SomeInteger: index.int else: index].val
@@ -264,6 +284,7 @@ proc `[]`*[T](self: Dik[T], slice: Slice[int]): seq[Option[T]] {.noinit.} =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     let dict = {"a": 0, "b": 1, "c": 2, "d": 3}.toDik
     doAssert dict[1..2] == @[some(1), some(2)]
+
   assert slice.a >= 0, "Slice A must be a natural positive integer"
   assert slice.b <= self.len.int, "Slice B must not be greater than len, index out of range"
   result = newSeqOfCap[Option[T]](slice.b - slice.a)
@@ -271,7 +292,9 @@ proc `[]`*[T](self: Dik[T], slice: Slice[int]): seq[Option[T]] {.noinit.} =
 
 func get*[T](self: Dik[T], value: Option[T]): seq[string] =
   ## Get keys by value, like a backwards `get` without reversing the dictionary.
-  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"): doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
+  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
+    doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
+
   for item in self.items:
     if item.val == value: result.add item.key.str
 
@@ -296,4 +319,4 @@ template `[]=`*(s: Indices, i: int, val: int) =
   else: doAssert false, "ERROR: Allocated size error"
 
 runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/tables"):
-  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())
+  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())  ## "Sanity" check, ignore.
