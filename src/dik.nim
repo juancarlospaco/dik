@@ -320,5 +320,6 @@ template `[]=`*(s: Indices; i: int; val: int) =
   elif self.allocated.int64 <= 0xffffffff: cast[ptr UncheckedArray[int32]](s)[i] = int32(val)
   else: doAssert false, "ERROR: Allocated size error"
 
-runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/tables"):
-  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]()) ## Sanity check, ignore.
+runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/tables --import:std/json"):
+  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())  ## Sanity check, ignore.
+  doAssert {"key": %*{"foo": 42, "bar": 3.14, "baz": true}}.toDik is Dik[JsonNode] ## Heterogeneous values.
