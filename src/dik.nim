@@ -23,6 +23,14 @@ func str(arrai: array[16, char]): string {.inline, noinit.} =
   for c in arrai:
     if c != '\x00': result.add c
 
+iterator enumerated*[T](self: Dik[T]; raw: static[bool] = false): auto =
+  runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
+    for (index, key, value) in {"key": "value"}.toDik.enumerated:
+      doAssert index == 0 and key == "key" and value.get == "value"
+
+  for i, it in self.items:
+    if likely(it != nil): yield (i, (when raw: it.key else: it.key.str), it.val)
+
 iterator pairs*[T](self: Dik[T]; raw: static[bool] = false): auto =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     for (key, value) in {"key": "value"}.toDik.pairs:
