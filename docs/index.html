@@ -108,8 +108,8 @@ window.addEventListener('DOMContentLoaded', main);
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">pretty
-      <li><a class="reference" href="#pretty%2CDik%5BT%5D"
-    title="pretty[T](self: Dik[T]): string">pretty[T](self: Dik[T]): string</a></li>
+      <li><a class="reference" href="#pretty%2CDik%5BT%5D%2Cstatic%5Bbool%5D"
+    title="pretty[T](self: Dik[T]; raw: static[bool] = false): string">pretty[T](self: Dik[T]; raw: static[bool] = false): string</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">contains
@@ -123,8 +123,8 @@ window.addEventListener('DOMContentLoaded', main);
 
   </ul>
   <ul class="simple nested-toc-section">$
-      <li><a class="reference" href="#%24%2CDik%5BT%5D"
-    title="`$`[T](self: Dik[T]): string">`$`[T](self: Dik[T]): string</a></li>
+      <li><a class="reference" href="#%24%2CDik%5BT%5D%2Cstatic%5Bbool%5D"
+    title="`$`[T](self: Dik[T]; raw: static[bool] = false): string">`$`[T](self: Dik[T]; raw: static[bool] = false): string</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">del
@@ -170,8 +170,8 @@ window.addEventListener('DOMContentLoaded', main);
 
   </ul>
   <ul class="simple nested-toc-section">toCsv
-      <li><a class="reference" href="#toCsv%2CDik%5BT%5D"
-    title="toCsv[T](self: Dik[T]): string">toCsv[T](self: Dik[T]): string</a></li>
+      <li><a class="reference" href="#toCsv%2CDik%5BT%5D%2Cstatic%5Bbool%5D"
+    title="toCsv[T](self: Dik[T]; raw: static[bool] = false): string">toCsv[T](self: Dik[T]; raw: static[bool] = false): string</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">clear
@@ -278,24 +278,25 @@ window.addEventListener('DOMContentLoaded', main);
 <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="$,Dik[T]"></a>
-<dt><pre><span class="Keyword">func</span> <a href="#%24%2CDik%5BT%5D"><span class="Identifier">`$`</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+<a id="$,Dik[T],static[bool]"></a>
+<dt><pre><span class="Keyword">func</span> <a href="#%24%2CDik%5BT%5D%2Cstatic%5Bbool%5D"><span class="Identifier">`$`</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">raw</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">bool</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
 <dd>
 
 
 <p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --styleCheck:error</strong></p>
-<pre class="listing"><span class="Identifier">doAssert</span> <span class="Operator">$</span><span class="Identifier">toDik</span><span class="Punctuation">(</span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">666</span><span class="Punctuation">,</span> <span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Punctuation">)</span> <span class="Operator">==</span> <span class="LongStringLit">&quot;&quot;&quot;{&quot;key&quot;:666,&quot;other&quot;:42}&quot;&quot;&quot;</span></pre>
+<pre class="listing"><span class="Identifier">doAssert</span> <span class="Operator">$</span><span class="Identifier">toDik</span><span class="Punctuation">(</span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">666</span><span class="Punctuation">,</span> <span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Punctuation">)</span> <span class="Operator">==</span> <span class="LongStringLit">&quot;&quot;&quot;{&quot;key&quot;:666,&quot;other&quot;:42}&quot;&quot;&quot;</span>
+<span class="Keyword">discard</span> <span class="Punctuation">`</span><span class="Operator">$</span><span class="Punctuation">`</span><span class="Punctuation">(</span><span class="Identifier">toDik</span><span class="Punctuation">(</span><span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">666</span><span class="Punctuation">,</span> <span class="StringLit">&quot;other&quot;</span><span class="Punctuation">:</span> <span class="DecNumber">42</span><span class="Punctuation">}</span><span class="Punctuation">)</span><span class="Punctuation">,</span> <span class="Identifier">raw</span> <span class="Operator">=</span> <span class="Identifier">true</span><span class="Punctuation">)</span></pre>
 
 </dd>
-<a id="pretty,Dik[T]"></a>
-<dt><pre><span class="Keyword">func</span> <a href="#pretty%2CDik%5BT%5D"><span class="Identifier">pretty</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+<a id="pretty,Dik[T],static[bool]"></a>
+<dt><pre><span class="Keyword">func</span> <a href="#pretty%2CDik%5BT%5D%2Cstatic%5Bbool%5D"><span class="Identifier">pretty</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">raw</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">bool</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
 <dd>
 
 
 
 </dd>
-<a id="toCsv,Dik[T]"></a>
-<dt><pre><span class="Keyword">func</span> <a href="#toCsv%2CDik%5BT%5D"><span class="Identifier">toCsv</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
+<a id="toCsv,Dik[T],static[bool]"></a>
+<dt><pre><span class="Keyword">func</span> <a href="#toCsv%2CDik%5BT%5D%2Cstatic%5Bbool%5D"><span class="Identifier">toCsv</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">raw</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">bool</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span></pre></dt>
 <dd>
 
 
@@ -558,7 +559,7 @@ Get items by index or backwards index, <strong>you can use the dictionary as if 
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-01 07:32:52 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-01 07:55:18 UTC</small>
       </div>
     </div>
   </div>
