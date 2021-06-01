@@ -205,6 +205,11 @@ window.addEventListener('DOMContentLoaded', main);
     title="pairs[T](self: Dik[T]; raw: static[bool] = false): auto">pairs[T](self: Dik[T]; raw: static[bool] = false): auto</a></li>
 
   </ul>
+  <ul class="simple nested-toc-section">enumerated
+      <li><a class="reference" href="#enumerated.i%2CDik%5BT%5D%2Cstatic%5Bbool%5D"
+    title="enumerated[T](self: Dik[T]; raw: static[bool] = false): auto">enumerated[T](self: Dik[T]; raw: static[bool] = false): auto</a></li>
+
+  </ul>
   <ul class="simple nested-toc-section">keys
       <li><a class="reference" href="#keys.i%2CDik%5BT%5D%2Cstatic%5Bbool%5D"
     title="keys[T](self: Dik[T]; raw: static[bool] = false): string or array[16, char]">keys[T](self: Dik[T]; raw: static[bool] = false): string or array[16, char]</a></li>
@@ -455,6 +460,16 @@ Get keys by value, like a backwards <tt class="docutils literal"><span class="pr
 <div class="section" id="15">
 <h1><a class="toc-backref" href="#15">Iterators</a></h1>
 <dl class="item">
+<a id="enumerated.i,Dik[T],static[bool]"></a>
+<dt><pre><span class="Keyword">iterator</span> <a href="#enumerated.i%2CDik%5BT%5D%2Cstatic%5Bbool%5D"><span class="Identifier">enumerated</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">raw</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">bool</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span></pre></dt>
+<dd>
+
+
+<p><strong class="examples_text">Example: cmd: --gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options</strong></p>
+<pre class="listing"><span class="Keyword">for</span> <span class="Punctuation">(</span><span class="Identifier">index</span><span class="Punctuation">,</span> <span class="Identifier">key</span><span class="Punctuation">,</span> <span class="Identifier">value</span><span class="Punctuation">)</span> <span class="Keyword">in</span> <span class="Punctuation">{</span><span class="StringLit">&quot;key&quot;</span><span class="Punctuation">:</span> <span class="StringLit">&quot;value&quot;</span><span class="Punctuation">}</span><span class="Operator">.</span><span class="Identifier">toDik</span><span class="Operator">.</span><span class="Identifier">enumerated</span><span class="Punctuation">:</span>
+  <span class="Identifier">doAssert</span> <span class="Identifier">index</span> <span class="Operator">==</span> <span class="DecNumber">0</span> <span class="Keyword">and</span> <span class="Identifier">key</span> <span class="Operator">==</span> <span class="StringLit">&quot;key&quot;</span> <span class="Keyword">and</span> <span class="Identifier">value</span><span class="Operator">.</span><span class="Identifier">get</span> <span class="Operator">==</span> <span class="StringLit">&quot;value&quot;</span></pre>
+
+</dd>
 <a id="pairs.i,Dik[T],static[bool]"></a>
 <dt><pre><span class="Keyword">iterator</span> <a href="#pairs.i%2CDik%5BT%5D%2Cstatic%5Bbool%5D"><span class="Identifier">pairs</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <a href="dik.html#Dik"><span class="Identifier">Dik</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">raw</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">bool</span><span class="Other">]</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">auto</span></pre></dt>
 <dd>
@@ -560,7 +575,7 @@ Get items by index or backwards index, <strong>you can use the dictionary as if 
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-01 08:21:15 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-01 08:39:30 UTC</small>
       </div>
     </div>
   </div>
