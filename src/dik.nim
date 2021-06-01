@@ -7,7 +7,7 @@ type
 
   Item[T] = ref object
     hash: uint32
-    key:  array[32, char]  # Instead of T, use array[char], but users interact via string
+    key:  array[16, char]  # Instead of T, use array[char], but users interact via string
     val:  Option[T]        # Value can be anything, even Nullish values.
 
   Dik*[T] = object
@@ -15,29 +15,30 @@ type
     items: seq[Item[T]]         ## `seq` of `Option[T]`.
     indices: Indices            ## `pointer`
 
-func arrai(str: string): array[32, char] {.inline.} =
+func arrai(str: string): array[16, char] {.inline.} =
   for i, c in str: result[i] = c
 
-func str(arrai: array[32, char]): string {.inline, noinit.} =
-  result = newStringOfCap(32)
+func str(arrai: array[16, char]): string {.inline, noinit.} =
+  result = newStringOfCap(16)
   for c in arrai:
     if c != '\x00': result.add c
 
-iterator pairs*[T](self: Dik[T]): (string, Option[T]) =
+iterator pairs*[T](self: Dik[T]; raw: static[bool] = false): auto =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     for (key, value) in {"key": "value"}.toDik.pairs:
       doAssert key == "key" and value.get == "value"
 
   for it in self.items:
-    if likely(it != nil): yield (it.key.str, it.val)
+    if likely(it != nil): yield ((when raw: it.key else: it.key.str), it.val)
 
-iterator keys*[T](self: Dik[T]): string =
+iterator keys*[T](self: Dik[T]; raw: static[bool] = false): string or array[16, char] =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
-    for (key, value) in {"key": "value"}.toDik.pairs:
+    for key in {"key": "value"}.toDik.keys:
       doAssert key == "key"
 
   for it in self.items:
-    if likely(it != nil): yield it.key.str
+    if likely(it != nil):
+      yield (when raw: it.key else: it.key.str)
 
 iterator values*[T](self: Dik[T]): Option[T] =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
@@ -106,7 +107,7 @@ proc clear*[T](self: var Dik[T]) {.inline.} =
     doAssert $dict == "{:}" and dict.len == 0
 
   clearDikImpl(self)
-  self.resized(32)
+  self.resized(16)
 
 proc `=destroy`*[T](self: var Dik[T]) =
   clearDikImpl(self)
@@ -132,16 +133,16 @@ func `==`*[T](lhs, rhs: Dik[T]): bool =
     inc i1
   result = true
 
-func memset(p: pointer, v: cint, s: SomeInteger or csize_t): pointer {.importc, header: "string.h", discardable.}
+func memset(p: pointer; v: cint; s: SomeInteger or csize_t): pointer {.importc, header: "string.h", discardable.}
 
-func findEmptySlot[T](self: Dik[T], hashish: uint32): int =
+func findEmptySlot[T](self: Dik[T]; hashish: uint32): int =
   var i = hashish.int and int(self.allocated - 1)
   while on:
     if self.indices[i] == -1: return i
     i = (((i * 5) + 1) and int(self.allocated - 1))
   doAssert false, "ERROR: Slot not found, internal error"
 
-proc resized*[T](self: var Dik[T], newSize: Positive) =
+proc resized*[T](self: var Dik[T]; newSize: Positive) =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     var dict: Dik[int] = {"key": 666, "other": 42}.toDik
     doAssert dict.cap == 2   ## Capacity is "Read-Only".
@@ -169,7 +170,7 @@ proc resized*[T](self: var Dik[T], newSize: Positive) =
     let i1 = self.findEmptySlot(it.hash.uint32)
     self.indices[i1] = i
 
-proc newDik*[T](): Dik[T] {.inline.} = result.resized(32)
+proc newDik*[T](): Dik[T] {.inline.} = result.resized(16)
 
 proc newDikOfCap*[T](capacity: Positive): Dik[T] {.inline.} = result.resized(capacity)
 
@@ -181,7 +182,7 @@ proc toDik*[T](items: openArray[(string, T)]): Dik[T] =
   result = newDikOfCap[T](items.len)
   for x in items: result[x[0]] = x[1]
 
-func lookup[T](self: Dik[T], key: string, h: int): (int, int) =
+func lookup[T](self: Dik[T]; key: string; h: int): (int, int) =
   assert key.len > 0, "key must not be empty string"
   let key = arrai(key)
   let hashish = self.allocated - 1.uint32
@@ -195,7 +196,7 @@ func lookup[T](self: Dik[T], key: string, h: int): (int, int) =
     i = (((i * 5) + 1) and hashish.int)
   doAssert false, "ERROR: Dik item not found"
 
-func contains*[T](self: Dik[T], key: string): bool =
+func contains*[T](self: Dik[T]; key: string or array[16, char]): bool =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     doAssert {"key": "value"}.toDik.contains "key"
 
@@ -203,7 +204,7 @@ func contains*[T](self: Dik[T], key: string): bool =
   if self.allocated < 1: return false
   result = self.lookup(key, hash(key))[1] >= 0
 
-func del*[T](self: var Dik[T], key: string) =
+func del*[T](self: var Dik[T]; key: string or array[16, char]) =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error"):
     var dict: Dik[string] = {"key": "value"}.toDik
     dict.del "key"
@@ -217,7 +218,7 @@ func del*[T](self: var Dik[T], key: string) =
   self.indices[i1] = -2
   self.len.dec
 
-proc add*[T](self: var Dik[T], key: string, val: T or Option[T]) =
+proc add*[T](self: var Dik[T]; key: string or array[16, char]; val: T or Option[T]) =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     var dict: Dik[string] = {"key": "value"}.toDik
     dict.add "other", "value"
@@ -230,21 +231,20 @@ proc add*[T](self: var Dik[T], key: string, val: T or Option[T]) =
     doAssert $dict == """{"key":value,"other":value,"another":value,"duplicated":2}"""
 
   assert key.len > 0, "key must not be empty string"
-  assert key.len <= 32, "key must not be longer than 32 char"
+  assert key.len <= 16, "key must not be longer than 16 char"
   if self.items.len == self.cap.int:
-    if self.allocated > 0: self.resized(self.len + self.len) else: self.resized(32)
+    if self.allocated > 0: self.resized(self.len + self.len) else: self.resized(16)
   let hashish = hash(key)
   let (i1, i2) = self.lookup(key, hashish)
-  let value = when val is T: some(val) else: val
   case i2
   of -1:
-    self.items.add(Item[T](hash: hashish.uint32, key: arrai(key), val: value))
+    self.items.add(Item[T](hash: hashish.uint32, key: arrai(key), val: (when val is T: some(val) else: val)))
     self.indices[i1] = self.items.high
     inc self.len
   of -2: doAssert false, "ERROR: Failed to add a new item"
-  else: self.items[i2].val = value
+  else: self.items[i2].val = (when val is T: some(val) else: val)
 
-func get*[T](self: Dik[T], key: string): Option[T] =
+func get*[T](self: Dik[T]; key: string or array[16, char]): Option[T] =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     var dict: Dik[string] = {"key": "X"}.toDik
     doAssert dict.get"key" is Option[string] and dict.get"key".isSome and dict.get"key".get == "X"
@@ -262,13 +262,13 @@ func toSeq*[T](self: Dik[T]): seq[Option[T]] =
   result = newSeqOfCap[Option[T]](self.items.len)
   for item in self.items: result.add item.val
 
-template `[]=`*[T](self: var Dik[T], key: string, val: T or Option[T]) = self.add(key, val)
+template `[]=`*[T](self: var Dik[T]; key: string or array[16, char]; val: T or Option[T]) = self.add(key, val)
   ## Alias for `Dik.add`.
 
-template `[]`*[T](self: Dik[T], key: string): Option[T] = self.get(key)
+template `[]`*[T](self: Dik[T]; key: string or array[16, char]): Option[T] = self.get(key)
   ## Alias for `Dik.get`.
 
-template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T] =
+template `[]`*[T](self: Dik[T]; index: SomeInteger or BackwardsIndex): Option[T] =
   ## Get items by index or backwards index, **you can use the dictionary as if it was an array**.
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     let dict = {"a": 0, "b": 1, "c": 2}.toDik
@@ -280,7 +280,7 @@ template `[]`*[T](self: Dik[T], index: SomeInteger or BackwardsIndex): Option[T]
   assert index.int <= self.len.int, "index must not be greater than len, index out of range"
   self.items[when index is SomeInteger: index.int else: index].val
 
-proc `[]`*[T](self: Dik[T], slice: Slice[int]): seq[Option[T]] {.noinit.} =
+proc `[]`*[T](self: Dik[T]; slice: Slice[int]): seq[Option[T]] {.noinit.} =
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     let dict = {"a": 0, "b": 1, "c": 2, "d": 3}.toDik
     doAssert dict[1..2] == @[some(1), some(2)]
@@ -290,19 +290,20 @@ proc `[]`*[T](self: Dik[T], slice: Slice[int]): seq[Option[T]] {.noinit.} =
   result = newSeqOfCap[Option[T]](slice.b - slice.a)
   for item in self.items[slice]: result.add item.val
 
-func get*[T](self: Dik[T], value: Option[T]): seq[string] =
+func get*[T](self: Dik[T]; value: Option[T] or T): seq[string] =
   ## Get keys by value, like a backwards `get` without reversing the dictionary.
   runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/options"):
     doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(some 0) == @["a", "c"]
+    doAssert {"a": 0, "b": 1, "c": 0}.toDik.get(  0   ) == @["a", "c"]
 
   for item in self.items:
-    if item.val == value: result.add item.key.str
+    if item.val == (when value is T: some(value) else: value): result.add item.key.str
 
 template len*(self: Dik): int = self.len.int
 
 template cap*(self: Dik): int = self.cap.int
 
-template `[]`*(s: Indices, i: int): int =
+template `[]`*(s: Indices; i: int): int =
   ## .. warning:: **DO NOT USE.**
   var x: int
   if self.allocated.int64 <= 0xff:         x = cast[ptr UncheckedArray[int8]](s)[i]
@@ -311,7 +312,7 @@ template `[]`*(s: Indices, i: int): int =
   else: doAssert false, "ERROR: Allocated size error"
   x
 
-template `[]=`*(s: Indices, i: int, val: int) =
+template `[]=`*(s: Indices; i: int; val: int) =
   ## .. warning:: **DO NOT USE.**
   if self.allocated.int64 <= 0xff:         cast[ptr UncheckedArray[int8]](s)[i]  = int8(val)
   elif self.allocated.int64 <= 0xffff:     cast[ptr UncheckedArray[int16]](s)[i] = int16(val)
@@ -319,4 +320,4 @@ template `[]=`*(s: Indices, i: int, val: int) =
   else: doAssert false, "ERROR: Allocated size error"
 
 runnableExamples("--gc:arc --experimental:strictFuncs --styleCheck:error --import:std/tables"):
-  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]())  ## "Sanity" check, ignore.
+  doAssert sizeof(newDik[string]()) == sizeof(initOrderedTable[string, string]()) ## Sanity check, ignore.
